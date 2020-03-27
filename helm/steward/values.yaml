@@ -1,11 +1,13 @@
-askPassScript: |
+askPassScript: |-
   #!/bin/bash
   set -u
   echo ${GITHUB_TOKEN}
 
+
 # add repos in following format:
+# repos: |-
 #  - org/repo-name
-repos: |
+repos:
 
 steward:
   # provide values for the following
@@ -18,7 +20,7 @@ steward:
 image:
   repository: fthomas/scala-steward
   tag: latest
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
 
 cron:
   interval: "@daily"
@@ -33,16 +35,18 @@ args:
   - "$(GIT_AUTHOR_NAME)"
   - --git-author-email
   - "$(GIT_AUTHOR_EMAIL)"
-  - --github-api-host
+  - --vcs-api-host
   - "https://api.github.com"
-  - --github-login
+  - --vcs-login
   - "$(GITHUB_LOGIN)"
   - --git-ask-pass
   - "/opt/config_values/git_ask_pass_script.sh"
+  - --do-not-fork
 
 persistence:
   accessMode: ReadWriteOnce
   size: 10Gi
+  storageClassName: standard
 
 resources: {}
 

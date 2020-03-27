@@ -33,27 +33,28 @@ spec:
                 - name: data
                   mountPath: /root/.ivy2
                   subPath: .ivy2
-                - name: configValues
+                - name: config-values
                   mountPath: /opt/config_values
               envFrom:
                 - secretRef:
-                    name: {{ template "sml-internal-steward.fullname" }}
+                    name: {{ template "sml-internal-steward.fullname" . }}
               env:
                 - name: GIT_AUTHOR_NAME
-                  value: {{ .Values.steward.gitAuthorName }}
+                  value: {{ .Values.steward.gitAuthorName | quote }}
                 - name: GIT_AUTHOR_EMAIL
-                  value: {{ .Values.steward.gitAuthorEmail }}
+                  value: {{ .Values.steward.gitAuthorEmail | quote }}
                 - name: GITHUB_LOGIN
-                  value: {{ .Values.steward.githubLogin }}
+                  value: {{ .Values.steward.githubLogin | quote }}
               resources:
 {{ toYaml .Values.resources | indent 16 }}
           volumes:
             - name: data
               persistentVolumeClaim:
                 claimName: {{ .Values.persistence.workspace | default (include "sml-internal-steward.fullname" .) }}
-            - name: configValues
+            - name: config-values
               configMap:
                 name: {{ template "sml-internal-steward.fullname" . }}
+                defaultMode: 493
         {{- with .Values.nodeSelector }}
           nodeSelector:
     {{ toYaml . | indent 8 }}
