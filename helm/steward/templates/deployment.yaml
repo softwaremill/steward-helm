@@ -1,0 +1,73 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ template "sml-internal-steward.fullname" . }}
+  labels:
+    app: {{ template "sml-internal-steward.name" . }}
+    chart: {{ template "sml-internal-steward.chart" . }}
+    release: {{ .Release.Name }}
+spec:
+  schedule: {{ .Values.cron.interval | quote }}
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: {{ template "sml-internal-steward.name" . }}
+            release: {{ .Release.Name }}
+          annotations:
+            releaseTimestamp: {{ now }}
+        spec:
+          containers:
+            - name: {{ .Chart.Name }}
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              args:
+              {{- range $arg := .Values.args }}
+              - {{ $arg }}
+              {{- end }}
+              volumeMounts:
+                - name: data
+                  mountPath: /opt/scala-steward/workspace
+                  subPath: workspace
+                - name: data
+                  mountPath: /root/.ivy2
+                  subPath: .ivy2
+                - name: configValues
+                  mountPath: /opt/config_values
+              envFrom:
+                - secretRef:
+                    name: {{ template "sml-internal-steward.fullname" }}
+              env:
+                - name: GIT_AUTHOR_NAME
+                  value: {{ .Values.steward.gitAuthorName }}
+                - name: GIT_AUTHOR_EMAIL
+                  value: {{ .Values.steward.gitAuthorEmail }}
+                - name: GITHUB_LOGIN
+                  value: {{ .Values.steward.githubLogin }}
+              resources:
+{{ toYaml .Values.resources | indent 16 }}
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: {{ .Values.persistence.workspace | default (include "sml-internal-steward.fullname" .) }}
+            - name: configValues
+              configMap:
+                name: {{ template "sml-internal-steward.fullname" . }}
+        {{- with .Values.nodeSelector }}
+          nodeSelector:
+    {{ toYaml . | indent 8 }}
+        {{- end }}
+        {{- with .Values.affinity }}
+          affinity:
+    {{ toYaml . | indent 8 }}
+        {{- end }}
+        {{- with .Values.tolerations }}
+          tolerations:
+    {{ toYaml . | indent 8 }}
+        {{- end }}
+          restartPolicy: {{ .Values.cron.restartPolicy }}
+          {{- if .Values.image.pullSecret }}
+          imagePullSecrets:
+            - name: {{ .Values.image.pullSecret }}
+          {{- end }}

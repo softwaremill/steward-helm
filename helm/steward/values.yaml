@@ -1,0 +1,55 @@
+askPassScript: |
+  #!/bin/bash
+  set -u
+  echo ${GITHUB_TOKEN}
+
+# add repos in following format:
+#  - org/repo-name
+repos: |
+
+steward:
+  # provide values for the following
+  githubLogin:
+  githubToken:
+  gitAuthorName:
+  gitAuthorEmail:
+
+
+image:
+  repository: fthomas/scala-steward
+  tag: latest
+  pullPolicy: Always
+
+cron:
+  interval: "@daily"
+  restartPolicy: OnFailure
+
+args:
+  - --workspace
+  - "/opt/scala-steward/workspace"
+  - --repos-file
+  - "/opt/config_values/repos.md"
+  - --git-author-name
+  - "$(GIT_AUTHOR_NAME)"
+  - --git-author-email
+  - "$(GIT_AUTHOR_EMAIL)"
+  - --github-api-host
+  - "https://api.github.com"
+  - --github-login
+  - "$(GITHUB_LOGIN)"
+  - --git-ask-pass
+  - "/opt/config_values/git_ask_pass_script.sh"
+
+persistence:
+  accessMode: ReadWriteOnce
+  size: 10Gi
+
+resources: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+
