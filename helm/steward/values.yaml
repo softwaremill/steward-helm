@@ -8,6 +8,7 @@ askPassScript: |-
 # repos: |-
 #  - org/repo-name
 repos:
+  - org/repo-name
 
 steward:
   # provide values for the following
