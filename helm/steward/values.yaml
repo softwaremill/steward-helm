@@ -7,7 +7,7 @@ askPassScript: |-
 # add repos in following format:
 # repos: |-
 #  - org/repo-name
-repos:
+repos: |
   - org/repo-name
 
 steward:
