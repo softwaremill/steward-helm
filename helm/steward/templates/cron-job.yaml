@@ -37,14 +37,14 @@ spec:
                   mountPath: /opt/config_values
               envFrom:
                 - secretRef:
-                    name: {{ template "github-token-secret-name" . }}
+                    name: {{ template "vcs-token-secret-name" . }}
               env:
                 - name: GIT_AUTHOR_NAME
                   value: {{ .Values.steward.gitAuthorName | quote }}
                 - name: GIT_AUTHOR_EMAIL
                   value: {{ .Values.steward.gitAuthorEmail | quote }}
-                - name: GITHUB_LOGIN
-                  value: {{ .Values.steward.githubLogin | quote }}
+                - name: VCS_LOGIN
+                  value: {{ .Values.steward.vcsLogin }}
               resources:
 {{ toYaml .Values.resources | indent 16 }}
           volumes:

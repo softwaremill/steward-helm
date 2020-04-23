@@ -9,7 +9,8 @@ This is a helm chart for [scala steward](https://github.com/fthomas/scala-stewar
 1. Set the credentials in `steward` key.
 1. Install this chart:
    ```shell script
-    helm install -f custom.yaml steward helm/steward
+   helm repo add softwaremill https://storage.googleapis.com/softwaremill-helm/ 
+   helm install -f custom.yaml steward softwaremill/steward
    ```
    
  ## Details

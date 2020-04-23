@@ -1,7 +1,7 @@
 askPassScript: |-
   #!/bin/bash
   set -u
-  echo ${GITHUB_TOKEN}
+  echo ${VCS_TOKEN}
 
 
 # add repos in following format:
@@ -12,14 +12,14 @@ repos: |
 
 steward:
   # provide values for the following
-  githubLogin:
-  githubToken:
+  vcsLogin:
+  vcsToken:
   gitAuthorName:
   gitAuthorEmail:
 
-# If empty, the chart will create the secret containing the github token.
+# If empty, the chart will create the secret containing the vcs token.
 # If not empty - the already existing secret is used.
-# The secret should have a field names GITHUB_TOKEN
+# The secret should have a field names VCS_TOKEN
 existingSecretName:
 
 image:
@@ -43,7 +43,7 @@ args:
   - --vcs-api-host
   - "https://api.github.com"
   - --vcs-login
-  - "$(GITHUB_LOGIN)"
+  - "$(VCS_LOGIN)"
   - --git-ask-pass
   - "/opt/config_values/git_ask_pass_script.sh"
   - --do-not-fork
