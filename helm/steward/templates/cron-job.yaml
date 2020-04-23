@@ -49,8 +49,12 @@ spec:
 {{ toYaml .Values.resources | indent 16 }}
           volumes:
             - name: data
+              {{- if .Values.persistence.enabled }}
               persistentVolumeClaim:
                 claimName: {{ .Values.persistence.workspace | default (include "steward.fullname" .) }}
+              {{- else }}
+              emptyDir: {}
+              {{- end }}
             - name: config-values
               configMap:
                 name: {{ template "steward.fullname" . }}

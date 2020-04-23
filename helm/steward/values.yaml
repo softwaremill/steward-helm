@@ -49,6 +49,7 @@ args:
   - --do-not-fork
 
 persistence:
+  enabled: true
   accessMode: ReadWriteOnce
   size: 10Gi
   storageClassName: standard
