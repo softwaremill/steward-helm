@@ -3,7 +3,6 @@ askPassScript: |-
   set -u
   echo ${VCS_TOKEN}
 
-
 # add repos in following format:
 # repos: |-
 #  - org/repo-name
@@ -65,5 +64,3 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-
-
