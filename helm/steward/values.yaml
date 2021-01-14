@@ -17,6 +17,10 @@ steward:
   gitAuthorName:
   gitAuthorEmail:
 
+# If you need to provide Nexus credentials, uncomment the below lines and provide proper credentials
+# credentialsSbt: |
+#  credentials += Credentials("Some Nexus Repository Manager", "my.artifact.repo.net", "admin", "admin123")
+
 # If empty, the chart will create the secret containing the vcs token.
 # If not empty - the already existing secret is used.
 # The secret should have a field names VCS_TOKEN

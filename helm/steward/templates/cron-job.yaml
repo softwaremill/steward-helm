@@ -35,6 +35,11 @@ spec:
                   subPath: .ivy2
                 - name: config-values
                   mountPath: /opt/config_values
+                {{- if .Values.credentialsSbt }}
+                - name: credentials-sbt
+                  mountPath: /root/.sbt/1.0/credentials.sbt
+                  subPath: credentials.sbt
+                {{- end }}
               envFrom:
                 - secretRef:
                     name: {{ template "vcs-token-secret-name" . }}
@@ -59,6 +64,11 @@ spec:
               configMap:
                 name: {{ template "steward.fullname" . }}
                 defaultMode: 493
+            {{- if .Values.credentialsSbt }}
+            - name: credentials-sbt
+              secret:
+                secretName: {{ template "steward.fullname" . }}-credentials-sbt
+            {{- end }}
         {{- with .Values.nodeSelector }}
           nodeSelector:
     {{ toYaml . | indent 8 }}
