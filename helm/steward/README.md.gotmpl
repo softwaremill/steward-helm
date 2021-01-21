@@ -1,0 +1,34 @@
+{{ template "chart.header" . }}
+{{ template "chart.versionBadge" . }}{{ template "chart.typeBadge" . }}{{ template "chart.appVersionBadge" . }}
+
+{{ template "chart.description" . }}
+
+{{ template "chart.homepageLine" . }}
+
+## Quick start
+
+1. Make a copy of the values.yaml file.
+1. Add your repos to the `repos` key.
+1. Set the credentials in `steward` key.
+1. Install this chart:
+    1. Add the chart repository:
+        ```shell script
+        helm repo add softwaremill https://charts.softwaremill.com/
+        helm repo update
+        ```
+    1. Install the chart
+        ```
+        helm install -f custom.yaml <relase-name> softwaremill/steward
+        ```
+   
+## Configuration
+
+The following table lists the configurable parameters of the chart and the default values.
+
+{{ template "chart.valuesSection" . }}
+
+## Credits
+ 
+Based on an internal tool created by [Kasper Kondzielski](https://github.com/ghostbuster91).
+ 
+Happy helming!

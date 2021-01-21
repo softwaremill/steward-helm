@@ -1,3 +1,4 @@
+# -- Script which echoes VCS token
 askPassScript: |-
   #!/bin/bash
   set -u
@@ -6,23 +7,28 @@ askPassScript: |-
 # add repos in following format:
 # repos: |-
 #  - org/repo-name
+# -- List or repositories
 repos: |
   - org/repo-name
 
 steward:
-  # provide values for the following
-  vcsLogin:
-  vcsToken:
-  gitAuthorName:
-  gitAuthorEmail:
+  # -- VCS login name
+  vcsLogin: ""
+  # -- VCS token
+  vcsToken: ""
+  # -- Name of the git user
+  gitAuthorName: steward
+  # -- Email of the git user
+  gitAuthorEmail: steward@example.com
 
+# -- Sbt credentials
+credentialsSbt: |
 # If you need to provide Nexus credentials, uncomment the below lines and provide proper credentials
-# credentialsSbt: |
 #  credentials += Credentials("Some Nexus Repository Manager", "my.artifact.repo.net", "admin", "admin123")
 
-# If empty, the chart will create the secret containing the vcs token.
-# If not empty - the already existing secret is used.
-# The secret should have a field names VCS_TOKEN
+# -- If empty, the chart will create the secret containing the vcs token.
+#    If not empty - the already existing secret is used.
+#    The secret should have a field names VCS_TOKEN
 existingSecretName:
 
 image:
@@ -31,9 +37,12 @@ image:
   pullPolicy: IfNotPresent
 
 cron:
+  # -- cron expression - when to run kubernetes CronJob
   interval: "@daily"
+  # -- Whether to restart cronjob on failure
   restartPolicy: OnFailure
 
+# -- Arguments passed to steward binary
 args:
   - --workspace
   - "/opt/scala-steward/workspace"
@@ -52,9 +61,13 @@ args:
   - --do-not-fork
 
 persistence:
+  # -- Whether enable persistent volume to store cache
   enabled: true
+  # -- Access mode of the PVC
   accessMode: ReadWriteOnce
+  # -- Size of the PVC
   size: 10Gi
+  # -- Storage class
   storageClassName: standard
 
 resources: {}
