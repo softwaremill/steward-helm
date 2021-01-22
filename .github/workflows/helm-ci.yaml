@@ -1,0 +1,25 @@
+name: Scala Steward Helm Chart CI/CD
+
+on:
+  push:
+    paths:
+      - 'helm/**'
+  pull_request:
+    paths:
+      - 'helm/**'
+
+jobs:
+  lint:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+      - name: Set up Helm
+        uses: azure/setup-helm@v1
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+      - name: Setup chart testing
+        uses: helm/chart-testing-action@v2.0.1
+      - name: Run chart-testing (lint)
+        run: ct lint
