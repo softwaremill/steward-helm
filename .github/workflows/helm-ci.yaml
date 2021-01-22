@@ -23,3 +23,19 @@ jobs:
         uses: helm/chart-testing-action@v2.0.1
       - name: Run chart-testing (lint)
         run: ct lint
+
+  publish:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+      - name: Publish helm chart
+        uses: stefanprodan/helm-gh-pages@v1.2.0
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          charts_dir: helm
+          charts_url: https://softwaremill.github.io/sml-helm-public-repo
+          owner: softwaremill
+          repository: sml-helm-public-repo
+          helm_version: 3.4.1
+          linting: off
