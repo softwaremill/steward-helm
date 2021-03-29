@@ -5,7 +5,7 @@ description: The helm chart for scala steward - the bot that helps you keep libr
 name: steward
 version: 0.1.12
 home: https://github.com/fthomas/scala-steward
-maintainers: 
+maintainers:
   - name: SoftwareMill
     email: devops@softwaremill.com
     url: https://github.com/softwaremill/steward-helm

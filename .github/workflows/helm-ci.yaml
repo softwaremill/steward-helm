@@ -25,6 +25,7 @@ jobs:
         run: ct lint --chart-dirs helm --all
 
   publish:
+    needs: lint
     runs-on: ubuntu-18.04
     steps:
       - name: Checkout the code
