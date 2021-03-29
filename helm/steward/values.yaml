@@ -26,6 +26,12 @@ credentialsSbt: |
 # If you need to provide Nexus credentials, uncomment the below lines and provide proper credentials
 #  credentials += Credentials("Some Nexus Repository Manager", "my.artifact.repo.net", "admin", "admin123")
 
+# -- default.scala-steward.conf
+defaultConf: |
+# This section allows to define a default config used be Scala Steward
+# Once the config was defined here you must modify `args` below and add:
+#   --default-repo-conf /opt/config_values/default.scala-steward.conf
+
 # -- If empty, the chart will create the secret containing the vcs token.
 #    If not empty - the already existing secret is used.
 #    The secret should have a field names VCS_TOKEN
@@ -59,6 +65,8 @@ args:
   - --git-ask-pass
   - "/opt/config_values/git_ask_pass_script.sh"
   - --do-not-fork
+# - --default-repo-conf
+# - "/opt/config_values/default.scala-steward.conf"
 
 persistence:
   # -- Whether enable persistent volume to store cache

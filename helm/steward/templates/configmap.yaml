@@ -7,3 +7,5 @@ data:
 {{- .Values.askPassScript | nindent 4 }}
   repos.md: |-
 {{- .Values.repos | nindent 4 }}
+  default.scala-steward.conf: |-
+{{- .Values.defaultConf | nindent 4 }}
