@@ -3,5 +3,9 @@ type: application
 appVersion: "1.0"
 description: The helm chart for scala steward - the bot that helps you keep library dependencies and sbt plugins up-to-date.
 name: steward
-version: 0.1.10
+version: 0.1.12
 home: https://github.com/fthomas/scala-steward
+maintainers:
+  - name: SoftwareMill
+    email: devops@softwaremill.com
+    url: https://github.com/softwaremill/steward-helm

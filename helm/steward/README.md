@@ -34,6 +34,7 @@ The following table lists the configurable parameters of the chart and the defau
 | args | list | `["--workspace","/opt/scala-steward/workspace","--repos-file","/opt/config_values/repos.md","--git-author-name","$(GIT_AUTHOR_NAME)","--git-author-email","$(GIT_AUTHOR_EMAIL)","--vcs-api-host","https://api.github.com","--vcs-login","$(VCS_LOGIN)","--git-ask-pass","/opt/config_values/git_ask_pass_script.sh","--do-not-fork"]` | Arguments passed to steward binary |
 | askPassScript | string | `"#!/bin/bash\nset -u\necho ${VCS_TOKEN}"` | Script which echoes VCS token |
 | credentialsSbt | string | `""` | Sbt credentials |
+| defaultConf | string | `""` | Default Scala Steward config |
 | cron.interval | string | `"@daily"` | cron expression - when to run kubernetes CronJob |
 | cron.restartPolicy | string | `"OnFailure"` | Whether to restart cronjob on failure |
 | existingSecretName | string | `nil` | If empty, the chart will create the secret containing the vcs token.    If not empty - the already existing secret is used.    The secret should have a field names VCS_TOKEN |
