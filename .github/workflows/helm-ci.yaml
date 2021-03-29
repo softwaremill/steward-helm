@@ -22,7 +22,7 @@ jobs:
       - name: Setup chart testing
         uses: helm/chart-testing-action@v2.0.1
       - name: Run chart-testing (lint)
-        run: ct lint
+        run: ct lint --chart-dirs helm --all
 
   publish:
     runs-on: ubuntu-18.04
